@@ -1,0 +1,24 @@
+version: '3.5'
+
+services:
+
+  client:
+    image: andreaceccanti/wlcg-clients
+
+    environment:
+      - TZ=Europe/Rome
+      - BEARER_TOKEN
+
+    volumes:
+      - $HOME/grid-security:/etc/grid-security/certificates
+      - $HOME/ca-bundle:/etc/pki
+      - $HOME/vomsdir:/etc/grid-security/vomsdir:ro
+      - $HOME/vomses:/etc/vomses
+      - $HOME/.globus:/home/test/.globus:ro
+      - $HOME/.config/oidc-agent:/home/test/.config/oidc-agent:ro
+      - .:/home/test/wlcg-clients-container
+
+    entrypoint: /tini -- sleep infinity
+
+    extra_hosts:
+      - "storm.example: 192.168.65.2"
