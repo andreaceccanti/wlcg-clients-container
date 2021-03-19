@@ -22,3 +22,4 @@ services:
 
     extra_hosts:
       - "storm.example: 192.168.65.2"
+      - "iam.local.io: 192.168.65.2"

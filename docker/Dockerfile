@@ -1,10 +1,9 @@
 FROM centos:7
 
-# Allow customization of test user ID and name
-ARG TEST_USER=test
+# Allow customization of test user ID
 ARG TEST_USER_UID=501
 
-ENV TEST_USER $TEST_USER
+ENV TEST_USER test
 ENV TEST_USER_UID $TEST_USER_UID
 
 RUN echo "include_only=.garr.it,.cern.ch" >> /etc/yum/pluginconf.d/fastestmirror.conf && \
@@ -24,8 +23,11 @@ RUN wget https://ci.cloud.cnaf.infn.it/view/repos/job/repo_test_ca/lastSuccessfu
     chmod 600 /home/test/.globus/usercred.p12 && \
     chown -R test:test /home/test/.globus
 
+RUN wget https://fts-repo.web.cern.ch/fts-repo/fts3-rc-el7.repo -O /etc/yum.repos.d/fts3-rc-el7.repo && \
+    wget https://dmc-repo.web.cern.ch/dmc-repo/dmc-rc-el7.repo -O /etc/yum.repos.d/dmc-rc-el7.repo 
+
 RUN yum -y install epel-release && \
-    yum -y install voms-clients-java gfal2-util gfal2-all gfal2-python jq && \
+    yum -y install voms-clients-java gfal2-util gfal2-all gfal2-python jq davix fts-client && \
     yum clean all && \
     rm -rf /var/cache/yum
 

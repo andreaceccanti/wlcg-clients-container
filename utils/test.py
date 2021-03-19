@@ -16,7 +16,7 @@ gfal2.set_verbose(gfal2.verbose_level.trace)
 dst = 'davs://storm.example:8443/wlcg/test-not-found'
 ctx = gfal2.creat_context()
 
-ctx.set_opt_boolean("HTTP PLUGIN", "KEEP_ALIVE", False)
+ctx.set_opt_boolean("HTTP PLUGIN", "KEEP_ALIVE", True)
 
 cred = gfal2.cred_new("BEARER", os.getenv('BEARER_TOKEN'))
 gfal2.cred_set(ctx, dst, cred)
